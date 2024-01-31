@@ -17,12 +17,11 @@ import ccxt
 import plotly.graph_objs as go
 from binance.client import Client
 from datetime import datetime, timedelta
-import datetime
 
 
 
 app = Flask(__name__)
-app.secret_key = 'my_secret_key'
+app.secret_key = 'my_secret_ke'
 
 server = '.'
 database = 'proj'
