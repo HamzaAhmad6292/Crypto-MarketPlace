@@ -2,8 +2,98 @@
 
 {% block content%}
 
+
+
+<span class="market-txt" >Markets</span>
+  
+<br>
+
+
 <div class="market-box">
+
+  
+
+  <div class="flex-prop-markets">
+
     
+    <div class="gnf-index">
+      <span style="padding-bottom:10px;">Greed and Fear Index</span>
+      <div id="fear-greed-container">
+        <div id="fear-greed-value"></div>
+        <div id="fear-greed-label"></div>
+      </div>
+    </div>
+
+    <div class="gainers-box">
+      <span>Top Gainers</span>
+      <table>
+        <tbody id="coins-table">
+        </tbody>
+      </table>
+  
+    </div>
+    <div class="losers-box">
+      <span>Top Losers</span>
+      <table id="loser-table">
+        <thead>
+          
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+  
+    </div>
+    
+    <div class="top-vol">
+      <span>Top by Volume</span>
+      <table id="top-10-table">
+        <thead>
+          <tr>  
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  
+  <div class="mk-coins">
+    <form method="GET">
+      <div class="search-div">
+        <input class="search-box" type="text" name="q" placeholder="Search Here!" value="{{ query }}">
+        <input class="search-btn" type="submit" value="Search">
+      </div>
+      
+  </form>
+  <table class="coin-table">
+      <tr>
+          <th class="coin-symbol">Symbol</th> 
+          <th class="coin-volume">Volume</th>
+          <th class="coin-price">Price</th>
+          <th class="coin-price-change">Price Change (24h)</th>
+         
+      </tr>
+      {% for coin in top_200 %}
+      <tr>
+          <td class="coin-symbol">{{ coin['symbol'] }}</td>
+          <td class="coin-volume">${{ coin['quoteVolume']}}</td>
+          <td class="coin-price">${{ coin['lastPrice'] }}</td>
+          {% if coin['priceChangePercent']|float > 0 %}
+          <td class="coin-price-change" style="color: green;">+{{ coin['priceChangePercent'] }}%</td>
+          {% else %}
+          <td class="coin-price-change" style="color: red;">{{ coin['priceChangePercent'] }}%</td>
+          {% endif %}
+          <td class="trade-btn" class="coin-trade"><a href="/trade/{{ coin['symbol'] }}">Trade</a></td>
+      </tr>
+      {% endfor %}
+  </table>
+  </div>
+  
+
+
+
 </div>
 
 {% endblock %}

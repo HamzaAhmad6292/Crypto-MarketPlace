@@ -2,10 +2,93 @@
 
 {% block content%}
 
+<!-- CHECK AND PASS ALL JINJA STUFF VIA FLASK -->
+
+
 <div class="deposit-withdrawal-box">
     
-    <img src="{{ qr_src }}" alt="QR Code">
+    
+  <div class="depo-with-slider">
 
-</div>
+    
+    <a class="dw-button" onclick="showDiv1()">Deposit</a>
+    <a class="dw-button" onclick="showDiv2()">Withdrawal</a>
+  
+    
+    
+  </div>
+    
+  <div id="div1" style="display: none;">
+    <span class="depo-title">Deposit Crypto</span>
+    <!-- qr code via qr lib to display it thru flask backend -->
+    <div class="qr-img">
+      <img src="{{ qr_src }}" alt="QR Code">
+    </div>
+    <!--Copy Address -->
+
+    <label for="crypto">Select Coin:</label>
+
+    <select name="crypto" onchange="updateAddress(this.value)">
+      {% for crypto in cryptos %}
+      <option value="{{ crypto[0] }}">{{ crypto[0] }}</option>
+      {% endfor %}
+    </select>
+    <br>
+    <label style="font-size:25px;" for="crypto">Deposit Address:</label>
+    <h2 id="address">This is sample address holder</h2>
+
+
+  </div>
+  
+
+
+  <div id="div2" style="display: none;">
+
+    <form method="POST" action="{{ url_for('withdraw') }}">
+      <label for="coin">Select Coin:</label>
+      <select name="coin">
+        {% for coin in coins %}
+          <option value="{{ coin.id }}">{{ coin.name }}</option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <label for="amount">Withdrawal Amount:</label>
+      <input type="number" name="amount" id="amount" required>
+      <br><br>
+      <label for="address">Send to Address:</label>
+      <input type="text" name="address" id="address" required>
+      <br><br>
+      <input type="submit" value="Withdraw">
+    </form>
+
+  </div>
+
+<div class="box-transactions-depo-with">
+            <span class="head-recent-trans">
+                Recent Transactions
+            </span>
+
+            <div class="list-recent">
+                <ul>
+                  {% for item in items %}
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  {% endfor %}
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                </ul>
+            </div>
+        </div>    
+ 
 
 {% endblock %}

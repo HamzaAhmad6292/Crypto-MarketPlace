@@ -1,0 +1,46 @@
+{% extends "dashboard.html" %}
+
+{% block content%}
+<div class="port-area">
+    <div class="flex-ver">
+        <div class="networth-box">
+            <span style="font-size:1.5em">Total Net Worth:</span><br>
+            <span class="total-port-val"><b><sup>$</sup>{{total_portfolio}}</b></span>
+            <div class="vert-app-container">
+                <canvas style="height: 280px !important;margin-top:2em;" id="port-legends"></canvas>
+                <canvas style="height: 240px !important;width: 240px !important;" id="cryptoChart"></canvas>
+            </div>
+                
+            
+          
+            
+            <script src="{{ url_for('static', filename='chart.js') }}"></script>
+            
+        </div>
+        <div class="assets-trans-box">
+            <span class="assets-title">Assets:</span>
+            <ul>
+                {% for asset in assets %}
+                  <li class="list-recent-item">{{ asset.asset_name }} - {{ asset.quantity }}</li>
+                {% endfor %}
+                <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+                  <li class="list-recent-item">Hello{{ item }}</li>
+            </ul>
+
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

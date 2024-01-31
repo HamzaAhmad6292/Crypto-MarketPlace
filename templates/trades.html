@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://kit.fontawesome.com/77dca63751.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="../static/script.js" ></script>
+    <title>CoinFusion</title>
+    
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../static/c.png">
+ 
+
+
+
+</head>
+<body>
+
+    <nav>
+        <input id="nav-toggle" type="checkbox">
+        <img  class="logo" src="/static/logo.png"/>
+        <ul class="links">
+            <li><a href="/markets.html">Markets</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+    
+        
+        </ul>
+        <label for="nav-toggle" class="icon-burger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </label>
+    </nav>
+
+    <div class="flex-vert">
+
+      <div class="flex-hor">
+        
+      </div>
+        <div class="order-book">
+
+            <div class="orderbook-buy">
+                <p style="color:#01c38d;" class="order-box-title">Buy Orders</p>
+                <p >Price: Amount: Total:</p>
+                <div id="buyOrders"></div>
+      
+            </div>
+           
+           <div class="orderbook-sell">
+              <p style="border-bottom:1px solid red;" class="order-box-title">Sell Orders</p>
+              <p >Price: Amount: Total:</p>
+              <div id="sellOrders"></div>
+           </div> 
+            
+        
+        
+           
+        </div>
+
+        <div class="flex-hor-box">
+            <div class="flex-hor">
+                
+                <div class="chart-crypto">
+                  
+                
+                  <div class="chart-time">
+                    
+                    <a href="?interval=1m" onclick="addParameter()">1m</a>
+                    <a href="?interval=5m" onclick="addParameter()">5m</a>
+                    <a href="?interval=30m" onclick="addParameter()">30m</a>
+                    <a href="?interval=1h" onclick="addParameter()">1h</a>
+                    <a href="?interval=4h" onclick="addParameter()">4h</a>
+                    <a href="?interval=8h" onclick="addParameter()">8h</a>
+                    <a href="?interval=1d" onclick="addParameter()">1d</a>
+                    <a href="?interval=1w" onclick="addParameter()">1w</a>
+                  </div>
+
+
+                    <h1>{{ chart_title }}</h1>
+                    <div>
+                        {{ chart|safe }}
+                    </div>
+        
+                </div>
+                <div class="inflow-coin">
+                  <span class="inflow-title-txt">Live Money Inflow</span>
+                  <canvas class="inflowChartcs" id="inflowChart" style="padding-bottom:3em !important;padding-left: 4em !important;height: 280px !important;width: 555px !important;display: block !important;margin: auto !important;box-sizing: border-box !important;"></canvas>
+                </div>
+                
+                <!-- html code for the inflow -->
+    
+            </div>
+            
+        </div>
+      <div class="flex-hor-box">
+        <div class="trade-hist">
+
+          <h1>Trade History for {{ coin }}</h1>
+          <table>
+              <tr>
+                  <th>Timestamp</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+              </tr>
+              {% for trade in trades %}
+                  <tr>
+                      <td>{{ trade.timestamp }}</td>
+                      <td>{{ trade.price }}</td>
+                      <td>{{ trade.quantity }}</td>
+                  </tr>
+              {% endfor %}
+          </table>
+        </div>
+        <div class="trade-bar">
+                    
+          <div class="container-trade">
+            <div class="buy-sell-bar">
+              <form action="" method="POST">
+                <div class="input-group">
+                  <label class="order-boxie" for="buy-quantity">Quantity:</label>
+                  <input type="text" id="buy-quantity" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]+" placeholder="0.00" oninput="updateTotal('buy')" name="quantity" required>
+                </div>
+                <div class="input-group">
+                  <label class="order-boxie" for="buy-price">Price:</label>
+                  <input type="text" id="buy-price" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]+" placeholder="0.00" oninput="updateTotal('buy')" name="price" required>
+                </div>
+                <div class="input-group">
+                  <label class="order-boxie" for="buy-total">Total:</label>
+                  <span id="buy-total">0.00</span>
+                </div>
+                <button class="button buy-button" name="order_type" value="buy">Buy</button>
+              </form>
+            </div>
+            <div class="buy-sell-bar">
+              <form action="" method="POST">
+                <div class="input-group">
+                  <label class="order-boxie" for="sell-quantity">Quantity:</label>
+                  <input type="text" id="sell-quantity" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]+" placeholder="0.00" oninput="updateTotal('sell')" name="quantity" required>
+                </div>
+                <div class="input-group">
+                  <label class="order-boxie" for="sell-price">Price:</label>
+                  <input type="text" id="sell-price" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]+" placeholder="0.00" oninput="updateTotal('sell')" name="price" required>
+                </div>
+                <div class="input-group text-centre">
+                  <label class="order-boxie" for="sell-total">Total:</label>
+                  <span id="sell-total">0.00</span>
+                </div>
+                <button class="button sell-button" name="order_type" value="sell">Sell</button>
+              </form>
+            </div>
+          </div>
+          
+               
+
+                  
+        </div>
+      </div>
+
+    </div>
+    
+
+
+
+
+</body>
+</html>
+
+

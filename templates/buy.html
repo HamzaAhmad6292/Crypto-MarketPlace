@@ -11,7 +11,7 @@
             </span>
             <img class="buy-tether tether-image"  src="../static/tether.svg" alt="tether" >
         </div>
-
+        <form method="post" action="/Submit">
         <div class="payment-card">
             <img class="main-buy-img" src="../static/buy.svg" alt="">
             <br>
@@ -19,28 +19,28 @@
                 Tether Amount
             </span>
             <div class="input-buy">
-                <input type="text" id="usdt-amount" placeholder="$1000" oninput="displayValueBuy()">
+                <input type="text" id="usdt-amount" name="usdt-amount" placeholder="$1000" oninput="displayValueBuy()">
             </div>
             <div class="input-buy">
                 <span class="payment-title">Payment Details</span>
-                <input type="text" id="card-name" placeholder="Name on Card">
+                <input type="text" id="card-name" id="card-name" placeholder="Name on Card">
                 
             </div>
             <div class="input-buy">
-                <input type="text" id="card-num" placeholder="Card Number">
-                <input type="text" id="card-exp" placeholder="Expiry">
-                <input type="text" id="card-cvv" placeholder="CVV">
+                <input type="text" id="card-num" id="card-num" placeholder="Card Number">
+                <input type="text" id="card-exp" id="card-exp" placeholder="Expiry">
+                <input type="text" id="card-cvv" id="card-cvv" placeholder="CVV">
                 
             </div>
 
             <div class="buy-button">
-                 <button id="display-button">Purchase</button>
+                 <button id="display-button">Submit</button>
             </div>
 
             
 
         </div>
-
+        </form>
     </div>
    
 </div>
